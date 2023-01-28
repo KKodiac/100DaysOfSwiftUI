@@ -25,8 +25,7 @@ struct ContentView: View {
             
             VStack {
                 Text("Guess the Flag")
-                    .font(.largeTitle.weight(.bold))
-                    .foregroundColor(.white)
+                    .largeBlueTitle()
                 VStack(spacing: 15) {
                     Text("Tap the flag of")
                         .foregroundStyle(.secondary)
@@ -41,10 +40,7 @@ struct ContentView: View {
                         Button {
                             flagTapped(number)
                         } label: {
-                            Image(countries[number])
-                                .renderingMode(.original)
-                                .clipShape(Capsule())
-                                .shadow(radius: 5)
+                            FlagImage(country: countries[number])
                         }.clipShape(Capsule())
 
                     }
@@ -93,6 +89,31 @@ struct ContentView: View {
     func askReplay() {
         gameInterval = 8
         score = 0
+    }
+}
+
+struct FlagImage: View {
+    let country: String
+    var body: some View {
+        Image(country)
+            .renderingMode(.original)
+            .clipShape(Capsule())
+            .shadow(radius: 5)
+    }
+    
+}
+
+struct LargeBlueTitle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.largeTitle)
+            .foregroundColor(.blue)
+    }
+}
+
+extension View {
+    func largeBlueTitle() -> some View {
+        modifier(LargeBlueTitle())
     }
 }
 
