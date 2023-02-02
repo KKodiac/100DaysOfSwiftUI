@@ -10,7 +10,7 @@ import CoreML
 
 struct ContentView: View {
     @State private var wakeUp = defaultWakeTime
-    @State private var sleepAmount = 8.0
+    @State private var sleepAmount = 8.0 
     @State private var coffeeAmount = 1
     @State private var alertTitle = ""
     @State private var alertMessage = ""
@@ -24,41 +24,43 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-                Text("When do you want to wake up?")
-                    .font(.headline)
-                
-                DatePicker("Please enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
-                    .labelsHidden()
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Desired amount of sleep")
-                        .font(.headline)
-                    
-                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
+                Section {
+                    DatePicker("Please enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
+                } header: {
+                    Text("When do you want to wake up?")
                 }
-                Text("Daily coffee intake")
-                    .font(.headline)
-                
-                Stepper(coffeeAmount == 1 ? "1 cup" : "\(coffeeAmount) cups", value: $coffeeAmount, in: 1...20)
+                Section {
+                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
+                } header: {
+                    Text("Desired amount of sleep")
+                }
+                Section {
+                    Picker(coffeeAmount == 1 ? "1 cup" : "\(coffeeAmount) cups", selection: $coffeeAmount) {
+                        ForEach(1..<20) { Text("\($0)") }
+                    }
+                } header: {
+                    Text("Daily coffee intake")
+                }
+                Section {
+                    Text("\(alertMessage)").font(.headline)
+                } header: {
+                    Text("Preferred Sleep Time")
+                }
             }
+            .headerProminence(.standard)
             .navigationTitle("BetterRest")
-            .toolbar {
-                Button("Calculate", action: calculateBedtime)
+            .onChange(of: sleepAmount) { _ in
+                calculateBedtime()
             }
-            .alert(alertTitle, isPresented: $showingAlert) {
-                Button("OK") { }
-            } message: {
-                Text(alertMessage)
+            .onChange(of: wakeUp) { _ in
+                calculateBedtime()
+            }
+            .onChange(of: coffeeAmount) { _ in
+                calculateBedtime()
             }
         }
         
-    }
-    
-    func exampleDates() {
-        // create a second Date instance set to one day in seconds from now
-        let tomorrow = Date.now.addingTimeInterval(86400)
-        
-        // create a range from those two
-        let range = Date.now...tomorrow
     }
     
     func calculateBedtime() {
