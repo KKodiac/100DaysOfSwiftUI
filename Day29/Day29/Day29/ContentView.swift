@@ -14,8 +14,7 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
-    
-    let people = ["Finn", "Leia", "Luke", "Rey"]
+    @State private var score: Int = 0
     
     var body: some View {
         NavigationView {
@@ -35,6 +34,7 @@ struct ContentView: View {
                         Text(word)
                     }
                 }
+                Text("Your score is: \(score)")
             }
             .navigationTitle(rootWord)
             .textInputAutocapitalization(.never)
@@ -47,7 +47,15 @@ struct ContentView: View {
             } message: {
                 Text(errorMessage)
             }
-            
+            .toolbar {
+                ToolbarItem {
+                    Button(action: {
+                        startGame()
+                    }, label: {
+                        Text("Restart Game")
+                    })
+                }
+            }
         }
     }
     
@@ -67,6 +75,16 @@ struct ContentView: View {
 
         guard isReal(word: answer) else {
             wordError(title: "Word not recognized", message: "You can't just make them up, you know!")
+            return
+        }
+        
+        guard isStartWord(word: answer) else {
+            wordError(title: "Word not recognized", message: "Word is a start word!")
+            return
+        }
+        
+        guard shorterThanThree(word: answer) else {
+            wordError(title: "Word not recognized", message: "Word is too short!")
             return
         }
 
@@ -90,11 +108,11 @@ struct ContentView: View {
         fatalError("Could not load start.txt from bundle.")
     }
     
-    func isOriginal(word: String) -> Bool {
+    private func isOriginal(word: String) -> Bool {
         !usedWords.contains(word)
     }
     
-    func isPossible(word: String) -> Bool {
+    private func isPossible(word: String) -> Bool {
         var tempWord = rootWord
 
         for letter in word {
@@ -108,7 +126,7 @@ struct ContentView: View {
         return true
     }
     
-    func isReal(word: String) -> Bool {
+    private func isReal(word: String) -> Bool {
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
@@ -116,10 +134,22 @@ struct ContentView: View {
         return misspelledRange.location == NSNotFound
     }
     
-    func wordError(title: String, message: String) {
+    private func shorterThanThree(word: String) -> Bool {
+        return word.count < 3 ? true : false
+    }
+    
+    private func isStartWord(word: String) -> Bool {
+        return newWord == word ? true : false
+    }
+    
+    private func wordError(title: String, message: String) {
         errorTitle = title
         errorMessage = message
         showingError = true
+    }
+    
+    private func scoreCount(word: String) {
+        self.score += (word.count * usedWords.count)
     }
 }
 
