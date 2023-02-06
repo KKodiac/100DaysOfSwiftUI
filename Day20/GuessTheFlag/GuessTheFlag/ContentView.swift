@@ -15,6 +15,9 @@ struct ContentView: View {
     @State private var gameInterval = 8
     @State private var showAskReplay = false
     @State private var correctAnswer = Int.random(in: 0...2)
+    @State private var flaggedTapped = false
+    @State private var animationAmount = [0.0, 0.0, 0.0]
+    @State private var animationOpacity = [1.0, 1.0, 1.0]
     var body: some View {
         ZStack {
             RadialGradient(stops: [
@@ -30,8 +33,6 @@ struct ContentView: View {
                     Text("Tap the flag of")
                         .foregroundStyle(.secondary)
                         .font(.subheadline.weight(.heavy))
-
-
                     Text(countries[correctAnswer])
                         .foregroundColor(.white)
                         .font(.largeTitle.weight(.semibold))
@@ -41,8 +42,10 @@ struct ContentView: View {
                             flagTapped(number)
                         } label: {
                             FlagImage(country: countries[number])
-                        }.clipShape(Capsule())
-
+                        }
+                        .clipShape(Capsule())
+                        .rotation3DEffect(.degrees(animationAmount[number]), axis: (x: 1, y: 0, z: 0))
+                        .opacity(animationOpacity[number])
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -70,16 +73,32 @@ struct ContentView: View {
         if number == correctAnswer {
             scoreTitle = "Correct"
             score += 1
+            withAnimation {
+                animationAmount[number] += 360
+                switch number {
+                case 0:
+                    animationOpacity[1] = 0.25
+                    animationOpacity[2] = 0.25
+                case 1:
+                    animationOpacity[0] = 0.25
+                    animationOpacity[2] = 0.25
+                case 2:
+                    animationOpacity[0] = 0.25
+                    animationOpacity[1] = 0.25
+                default:
+                    return
+                }
+            }
         } else {
             scoreTitle = "Wrong! That's the flag of \(countries[number])"
         }
-        
         showingScore = true
     }
     
     func askQuestion() {
         gameInterval -= 1
         countries.shuffle()
+        animationOpacity = [1.0, 1.0, 1.0]
         correctAnswer = Int.random(in: 0...2)
         if gameInterval == 0 {
             showAskReplay = true
