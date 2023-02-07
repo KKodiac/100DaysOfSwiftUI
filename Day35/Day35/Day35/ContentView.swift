@@ -138,7 +138,7 @@ struct QuizView: View {
                     primaryButton: .default(
                         Text("홈으로"),
                         action: {dismiss()}
-                    ), secondaryButton: .cancel("취소")
+                    ), secondaryButton: .cancel(Text("취소"))
                 )
             }
         }
