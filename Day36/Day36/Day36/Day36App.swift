@@ -11,7 +11,7 @@ import SwiftUI
 struct Day36App: App {
     var body: some Scene {
         WindowGroup {
-            OnDelete()
+            ContentView()
         }
     }
 }

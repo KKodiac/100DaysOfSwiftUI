@@ -11,7 +11,7 @@
 		0BA6BFF2299348420077AF49 /* OnDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA6BFF1299348420077AF49 /* OnDelete.swift */; };
 		0BA6BFF4299348450077AF49 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BA6BFF3299348450077AF49 /* Assets.xcassets */; };
 		0BA6BFF7299348450077AF49 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BA6BFF6299348450077AF49 /* Preview Assets.xcassets */; };
-		0BA6BFFE299349010077AF49 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA6BFFD299349010077AF49 /* UserDefault.swift */; };
+		0BA6BFFE299349010077AF49 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA6BFFD299349010077AF49 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,7 +20,7 @@
 		0BA6BFF1299348420077AF49 /* OnDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDelete.swift; sourceTree = "<group>"; };
 		0BA6BFF3299348450077AF49 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0BA6BFF6299348450077AF49 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		0BA6BFFD299349010077AF49 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
+		0BA6BFFD299349010077AF49 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +57,7 @@
 				0BA6BFF1299348420077AF49 /* OnDelete.swift */,
 				0BA6BFF3299348450077AF49 /* Assets.xcassets */,
 				0BA6BFF5299348450077AF49 /* Preview Content */,
-				0BA6BFFD299349010077AF49 /* UserDefault.swift */,
+				0BA6BFFD299349010077AF49 /* ContentView.swift */,
 			);
 			path = Day36;
 			sourceTree = "<group>";
@@ -142,7 +142,7 @@
 			files = (
 				0BA6BFF2299348420077AF49 /* OnDelete.swift in Sources */,
 				0BA6BFF0299348420077AF49 /* Day36App.swift in Sources */,
-				0BA6BFFE299349010077AF49 /* UserDefault.swift in Sources */,
+				0BA6BFFE299349010077AF49 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
